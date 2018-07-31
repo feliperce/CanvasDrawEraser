@@ -18,10 +18,8 @@ class ArtView : View {
     private var y = 0
     private var erasePath: Path = Path()
     private lateinit var bitmap: Bitmap
-    private lateinit var bgBitmap: Bitmap
     private var paint: Paint = Paint()
     private var eraserPaint: Paint = Paint()
-    private var bgCanvas: Canvas = Canvas()
 
     constructor(context: Context?) : super(context) {
         init(context)
@@ -40,13 +38,6 @@ class ArtView : View {
 
         // aceleração de hardware
         setLayerType(View.LAYER_TYPE_SOFTWARE, null)
-
-        bgBitmap = Bitmap.createBitmap(bitmap.width, bitmap.height, Bitmap.Config.ARGB_8888)
-
-        bgCanvas = Canvas()
-        bgCanvas.setBitmap(bgBitmap)
-        bgCanvas.drawColor(Color.TRANSPARENT)
-        bgCanvas.drawBitmap(bgBitmap, 0f, 0f, null)
 
         //eraserPaint.setAlpha(0)
         eraserPaint.setStrokeJoin(Paint.Join.ROUND)
@@ -85,7 +76,7 @@ class ArtView : View {
 
                 invalidate()
         }
-        erasePath.reset()
+        //erasePath.reset()
         erasePath.addCircle(x.toFloat(), y.toFloat(), 30f, Path.Direction.CW)
         return true
     }
