@@ -22,7 +22,7 @@ class ArtView : View {
     private var x = 0
     private var y = 0
     private var erasePath: Path = Path()
-    private lateinit var bitmap: Bitmap
+    lateinit var bitmap: Bitmap
     private lateinit var bgBitmap: Bitmap
     private lateinit var filterBitmap: Bitmap
     private var paint: Paint = Paint()
