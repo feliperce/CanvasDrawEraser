@@ -8,6 +8,11 @@ import android.R.attr.y
 import android.R.attr.x
 import android.view.MotionEvent
 import android.R.attr.bitmap
+import android.opengl.ETC1.getHeight
+import android.opengl.ETC1.getWidth
+import android.graphics.Bitmap
+
+
 
 
 
@@ -90,5 +95,13 @@ class ArtView : View {
         //erasePath.reset()
         erasePath.addCircle(x.toFloat(), y.toFloat(), 50f, Path.Direction.CW)
         return true
+    }
+
+    fun getFinalBitmap(bmp1: Bitmap, bmp2: Bitmap): Bitmap {
+        val bmOverlay = Bitmap.createBitmap(bmp1.width, bmp1.height, bmp1.config)
+        val canvas = Canvas(bmOverlay)
+        canvas.drawBitmap(bmp1, Matrix(), null)
+        canvas.drawBitmap(bmp2, 0f, 0f, null)
+        return bmOverlay
     }
 }
