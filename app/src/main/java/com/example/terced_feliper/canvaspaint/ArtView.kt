@@ -18,8 +18,12 @@ class ArtView : View {
     private var y = 0
     private var erasePath: Path = Path()
     private lateinit var bitmap: Bitmap
+    private lateinit var bgBitmap: Bitmap
+    private lateinit var filterBitmap: Bitmap
     private var paint: Paint = Paint()
     private var eraserPaint: Paint = Paint()
+    private var filterCanvas: Canvas = Canvas()
+    private var filterPaint: Paint = Paint()
 
     constructor(context: Context?) : super(context) {
         init(context)
@@ -35,6 +39,7 @@ class ArtView : View {
 
     private fun init(context: Context?) {
         bitmap = BitmapFactory.decodeResource(context?.resources, R.drawable.main)
+        filterBitmap = BitmapFactory.decodeResource(context?.resources, R.drawable.filter)
 
         // aceleração de hardware
         setLayerType(View.LAYER_TYPE_SOFTWARE, null)
@@ -46,9 +51,15 @@ class ArtView : View {
         eraserPaint.setAntiAlias(true)
     }
 
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+        bitmap = Bitmap.createScaledBitmap(bitmap, w, h, false)
+    }
+
     override fun onDraw(canvas: Canvas?) {
         canvas?.drawBitmap(bitmap, 0f, 0f, paint)
-        canvas?.drawCircle(x.toFloat(), y.toFloat(), 30f, eraserPaint)
+        //canvas?.drawBitmap(filterBitmap, 0f, 0f, paint)
+        canvas?.drawCircle(x.toFloat(), y.toFloat(), 50f, eraserPaint)
 
         canvas?.drawPath(erasePath, eraserPaint);
     }
@@ -77,7 +88,7 @@ class ArtView : View {
                 invalidate()
         }
         //erasePath.reset()
-        erasePath.addCircle(x.toFloat(), y.toFloat(), 30f, Path.Direction.CW)
+        erasePath.addCircle(x.toFloat(), y.toFloat(), 50f, Path.Direction.CW)
         return true
     }
 }
